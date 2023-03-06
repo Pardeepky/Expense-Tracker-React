@@ -1,4 +1,5 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Button,
     Form,
@@ -7,18 +8,17 @@ import {
     Label,
 } from "reactstrap";
 import classes from './Login.module.css';
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context-store/Auth-Context";
 
-const Login = () => {
+const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const navigate = useNavigate();
-    const authCtx = useContext(AuthContext);
+    const confirmPasswordRef = useRef();
+    const navigate = useNavigate()
 
     const [formErrors, setFormErrors] = useState({
         email: '',
         password: '',
+        confirmPassword: '',
     });
 
     const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +29,7 @@ const Login = () => {
             setIsLoading(true);
             const enteredEmail = emailRef.current.value;
             const enteredPassword = passwordRef.current.value;
+            const confirmPassword = confirmPasswordRef.current.value;
 
             const emailRegex = /^\S+@\S+\.\S+$/;
             if (!emailRegex.test(enteredEmail)) {
@@ -42,11 +43,15 @@ const Login = () => {
             } else {
                 setFormErrors({ ...formErrors, password: '' });
             }
-
+            // Validate confirm password
+            if (confirmPassword !== enteredPassword) {
+                setFormErrors({ ...formErrors, confirmPassword: 'Passwords do not match' });
+            } else {
+                setFormErrors({ ...formErrors, confirmPassword: '' });
+            }
             // Submit form if there are no errors
-            if (!formErrors.email && !formErrors.password) {
-
-                const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDMDLGHFhbo5zks5z75xyYouKUnd1pG7R0', {
+            if (!formErrors.email && !formErrors.password && !formErrors.confirmPassword) {
+                const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDMDLGHFhbo5zks5z75xyYouKUnd1pG7R0', {
                     method: 'POST',
                     body: JSON.stringify({
                         email: enteredEmail,
@@ -58,15 +63,11 @@ const Login = () => {
                     }
                 });
                 if (res.ok) {
-                    const data = await res.json();
-                    authCtx.login(data.idToken);
+                    window.alert('User Signed Up succesfully')
                     navigate('/');
-                    emailRef.current.value = '';
-                    passwordRef.current.value = '';
                 } else {
                     const err = await res.json();
                     alert(err.error.message)
-
                 }
             }
         } catch (error) {
@@ -77,13 +78,13 @@ const Login = () => {
     };
 
     const handleClick = () => {
-        navigate('/signup');
+        navigate('/login');
     }
 
     return (
         <>
             <div className={`${classes.loginWrapper} mt-5`}>
-                <h2 className="text-center">Login</h2>
+                <h2 className="text-center">Signup</h2>
                 <Form onSubmit={onSubmit}>
                     <FormGroup floating>
                         <Input
@@ -107,15 +108,26 @@ const Login = () => {
                         <Label for="password">Password</Label>
                         {formErrors.password && <span className="error">{formErrors.password}</span>}
                     </FormGroup>
-                    {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Log In</Button></div>}
+                    <FormGroup floating>
+                        <Input
+                            id="confirPassword"
+                            placeholder="Enter Password"
+                            type='password'
+                            innerRef={confirmPasswordRef}
+                            name='confirmPassword'
+                        />
+                        <Label for="confirPassword">Confirm Password</Label>
+                        {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
+                    </FormGroup>
+                    {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Sign Up</Button></div>}
                     {isLoading && <div className="text-center d-grid gap-2"><Button>Submitting...</Button></div>}
                 </Form>
             </div>
             <div className={classes.loginWrapper}>
-                <p className="text-center">New User? <span style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={handleClick}>Signup</span></p>
+                <p className="text-center">Already have an account? <span style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={handleClick}>Login</span></p>
             </div>
         </>
     );
 };
 
-export default Login;
+export default Signup;
