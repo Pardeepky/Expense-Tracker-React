@@ -60,6 +60,7 @@ const ForgotPassword = ({ setIsLogging, setForgotPassword }) => {
 
     const handleClick = () => {
         setIsLogging(prevState => !prevState);
+        setForgotPassword(prevState => !prevState)
     }
 
     return (
