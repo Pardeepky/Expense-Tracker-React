@@ -13,7 +13,6 @@ const AuthProvider = (props) => {
 
     const logoutHandler = () => {
         localStorage.removeItem('token')
-        localStorage.removeItem('userName')
         setToken(null);
     }
 

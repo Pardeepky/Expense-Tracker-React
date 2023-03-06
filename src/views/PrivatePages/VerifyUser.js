@@ -31,7 +31,7 @@ const VerifyUser = () => {
     }
     return (
         <>
-            <div className='d-flex justify-content-center'>
+            <div className='d-flex justify-content-center m-2'>
                 <Button color="primary" onClick={handleSubmit}>Verify Email</Button>
             </div>
         </>

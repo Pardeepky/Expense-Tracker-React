@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import classes from './Login.module.css';
 
-const Signup = () => {
+const Signup = ({ setIsLogging }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();
@@ -78,7 +78,7 @@ const Signup = () => {
     };
 
     const handleClick = () => {
-        navigate('/login');
+        setIsLogging(prevState => !prevState);
     }
 
     return (

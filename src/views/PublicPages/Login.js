@@ -10,7 +10,7 @@ import classes from './Login.module.css';
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context-store/Auth-Context";
 
-const Login = () => {
+const Login = ({ setIsLogging }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const navigate = useNavigate();
@@ -77,7 +77,7 @@ const Login = () => {
     };
 
     const handleClick = () => {
-        navigate('/signup');
+        setIsLogging(prevState => !prevState);
     }
 
     return (
