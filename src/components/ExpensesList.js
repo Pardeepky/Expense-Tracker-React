@@ -1,10 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import ExpenseContext from '../context-store/Expense-Context'
 
 const ExpensesList = () => {
 
     const expCtx = useContext(ExpenseContext);
+
+    useEffect(() => {
+        expCtx.getExpense();
+    }, []);
+
     return (
         <div className='card m-5 bg-secondary text-white'>
             <h3 className='text-center m-2'>Expense List</h3>
@@ -17,8 +22,8 @@ const ExpensesList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {expCtx.expenses.map((item, idx) => (
-                        <tr key={idx}>
+                    {expCtx.expenses.map((item) => (
+                        <tr key={item.id}>
                             <td>{item.amount}</td>
                             <td>{item.description}</td>
                             <td>{item.category}</td>

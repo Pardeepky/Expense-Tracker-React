@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FormGroup, Label, Input, Form, Button, Col, Row } from 'reactstrap';
 import ExpenseContext from '../context-store/Expense-Context';
 
-const categories = ['food', 'petrol', 'travel'];
+const categories = ['Food', 'Petrol', 'Electronics'];
 
 const ExpensesForm = () => {
     const [amount, setAmount] = useState('');
@@ -12,7 +12,7 @@ const ExpensesForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        expCtx.addExpense({ amount, description, category });
+        expCtx.addExpense({ amount: amount, description: description, category: category });
     };
 
     return (
