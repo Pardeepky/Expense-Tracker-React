@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ForgotPassword from './ForgotPassword';
 import Login from './Login';
 import Signup from './Signup';
+import classes from './Login.module.css'
 
 const LoginScreen = () => {
     const [isLogging, setIsLogging] = useState(true);
@@ -22,9 +23,11 @@ const LoginScreen = () => {
     })
 
     return (<>
-        {isLogging && !forgotPassword && <Login setIsLogging={setIsLogging} setForgotPassword={setForgotPassword} /> }
-        {!isLogging && <Signup setIsLogging={setIsLogging} />}
-        {forgotPassword && <ForgotPassword setIsLogging={setIsLogging} setForgotPassword={setForgotPassword}/>}
+        <div className={classes.loginWrapper}>
+            {isLogging && !forgotPassword && <Login setIsLogging={setIsLogging} setForgotPassword={setForgotPassword} />}
+            {!isLogging && <Signup setIsLogging={setIsLogging} />}
+            {forgotPassword && <ForgotPassword setIsLogging={setIsLogging} setForgotPassword={setForgotPassword} />}
+        </div>
     </>);
 }
 

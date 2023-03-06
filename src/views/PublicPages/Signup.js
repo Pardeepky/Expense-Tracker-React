@@ -7,7 +7,6 @@ import {
     Input,
     Label,
 } from "reactstrap";
-import classes from './Login.module.css';
 
 const Signup = ({ setIsLogging }) => {
     const emailRef = useRef();
@@ -83,47 +82,45 @@ const Signup = ({ setIsLogging }) => {
 
     return (
         <>
-            <div className={`${classes.loginWrapper} mt-5`}>
-                <h2 className="text-center">Signup</h2>
-                <Form onSubmit={onSubmit}>
-                    <FormGroup floating>
-                        <Input
-                            id="login-email"
-                            placeholder="Enter Email"
-                            type="email"
-                            innerRef={emailRef}
-                            name='email'
-                        />
-                        <Label for="login-email">Email:</Label>
-                        {formErrors.email && <span className="error">{formErrors.email}</span>}
-                    </FormGroup>
-                    <FormGroup floating>
-                        <Input
-                            id="password"
-                            placeholder="Enter Password"
-                            type='password'
-                            innerRef={passwordRef}
-                            name='password'
-                        />
-                        <Label for="password">Password</Label>
-                        {formErrors.password && <span className="error">{formErrors.password}</span>}
-                    </FormGroup>
-                    <FormGroup floating>
-                        <Input
-                            id="confirPassword"
-                            placeholder="Enter Password"
-                            type='password'
-                            innerRef={confirmPasswordRef}
-                            name='confirmPassword'
-                        />
-                        <Label for="confirPassword">Confirm Password</Label>
-                        {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
-                    </FormGroup>
-                    {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Sign Up</Button></div>}
-                    {isLoading && <div className="text-center d-grid gap-2"><Button>Submitting...</Button></div>}
-                </Form>
-            </div>
-            <div className={classes.loginWrapper}>
+            <h2 className="text-center">Signup</h2>
+            <Form onSubmit={onSubmit}>
+                <FormGroup floating>
+                    <Input
+                        id="login-email"
+                        placeholder="Enter Email"
+                        type="email"
+                        innerRef={emailRef}
+                        name='email'
+                    />
+                    <Label for="login-email">Email:</Label>
+                    {formErrors.email && <span className="error">{formErrors.email}</span>}
+                </FormGroup>
+                <FormGroup floating>
+                    <Input
+                        id="password"
+                        placeholder="Enter Password"
+                        type='password'
+                        innerRef={passwordRef}
+                        name='password'
+                    />
+                    <Label for="password">Password</Label>
+                    {formErrors.password && <span className="error">{formErrors.password}</span>}
+                </FormGroup>
+                <FormGroup floating>
+                    <Input
+                        id="confirPassword"
+                        placeholder="Enter Password"
+                        type='password'
+                        innerRef={confirmPasswordRef}
+                        name='confirmPassword'
+                    />
+                    <Label for="confirPassword">Confirm Password</Label>
+                    {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
+                </FormGroup>
+                {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Sign Up</Button></div>}
+                {isLoading && <div className="text-center d-grid gap-2"><Button>Submitting...</Button></div>}
+            </Form>
+            <div>
                 <p className="text-center">Already have an account? <span style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={handleClick}>Login</span></p>
             </div>
         </>

@@ -6,7 +6,6 @@ import {
     Input,
     Label,
 } from "reactstrap";
-import classes from './Login.module.css';
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context-store/Auth-Context";
 
@@ -82,37 +81,35 @@ const Login = ({ setIsLogging, setForgotPassword }) => {
 
     return (
         <>
-            <div className={`${classes.loginWrapper} mt-5`}>
-                <h2 className="text-center">Login</h2>
-                <Form onSubmit={onSubmit}>
-                    <FormGroup floating>
-                        <Input
-                            id="login-email"
-                            placeholder="Enter Email"
-                            type="email"
-                            innerRef={emailRef}
-                            name='email'
-                        />
-                        <Label for="login-email">Email:</Label>
-                        {formErrors.email && <span className="error">{formErrors.email}</span>}
-                    </FormGroup>
-                    <FormGroup floating>
-                        <Input
-                            id="password"
-                            placeholder="Enter Password"
-                            type='password'
-                            innerRef={passwordRef}
-                            name='password'
-                        />
-                        <Label for="password">Password</Label>
-                        {formErrors.password && <span className="error">{formErrors.password}</span>}
-                    </FormGroup>
-                    <p className="text-center"><span style={{ color: 'red', cursor: 'pointer', fontWeight: 'bold' }} onClick={()=> setForgotPassword(true)}>Forgot Password?</span></p>
-                    {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Log In</Button></div>}
-                    {isLoading && <div className="text-center d-grid gap-2"><Button>Submitting...</Button></div>}
-                </Form>
-            </div>
-            <div className={classes.loginWrapper}>
+            <h2 className="text-center">Login</h2>
+            <Form onSubmit={onSubmit}>
+                <FormGroup floating>
+                    <Input
+                        id="login-email"
+                        placeholder="Enter Email"
+                        type="email"
+                        innerRef={emailRef}
+                        name='email'
+                    />
+                    <Label for="login-email">Email:</Label>
+                    {formErrors.email && <span className="error">{formErrors.email}</span>}
+                </FormGroup>
+                <FormGroup floating>
+                    <Input
+                        id="password"
+                        placeholder="Enter Password"
+                        type='password'
+                        innerRef={passwordRef}
+                        name='password'
+                    />
+                    <Label for="password">Password</Label>
+                    {formErrors.password && <span className="error">{formErrors.password}</span>}
+                </FormGroup>
+                <p className="text-center"><span style={{ color: 'red', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => setForgotPassword(true)}>Forgot Password?</span></p>
+                {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Log In</Button></div>}
+                {isLoading && <div className="text-center d-grid gap-2"><Button>Submitting...</Button></div>}
+            </Form>
+            <div>
                 <p className="text-center">New User? <span style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={handleClick}>Signup</span></p>
             </div>
         </>

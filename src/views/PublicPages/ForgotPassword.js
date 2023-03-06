@@ -6,7 +6,6 @@ import {
     Input,
     Label,
 } from "reactstrap";
-import classes from './Login.module.css';
 
 const ForgotPassword = ({ setIsLogging, setForgotPassword }) => {
     const emailRef = useRef();
@@ -65,25 +64,23 @@ const ForgotPassword = ({ setIsLogging, setForgotPassword }) => {
 
     return (
         <>
-            <div className={`${classes.loginWrapper} mt-5`}>
-                <p className="text-center">Enter registered email to retrieve password</p>
-                <Form onSubmit={onSubmit}>
-                    <FormGroup floating>
-                        <Input
-                            id="login-email"
-                            placeholder="Enter Email"
-                            type="email"
-                            innerRef={emailRef}
-                            name='email'
-                        />
-                        <Label for="login-email">Email:</Label>
-                        {formErrors.email && <span className="error">{formErrors.email}</span>}
-                    </FormGroup>
-                    {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Send Link</Button></div>}
-                    {isLoading && <div className="text-center d-grid gap-2"><Button>Loading...</Button></div>}
-                </Form>
-            </div>
-            <div className={classes.loginWrapper}>
+            <p className="text-center">Enter registered email to retrieve password</p>
+            <Form onSubmit={onSubmit}>
+                <FormGroup floating>
+                    <Input
+                        id="login-email"
+                        placeholder="Enter Email"
+                        type="email"
+                        innerRef={emailRef}
+                        name='email'
+                    />
+                    <Label for="login-email">Email:</Label>
+                    {formErrors.email && <span className="error">{formErrors.email}</span>}
+                </FormGroup>
+                {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Send Link</Button></div>}
+                {isLoading && <div className="text-center d-grid gap-2"><Button>Loading...</Button></div>}
+            </Form>
+            <div >
                 <p className="text-center">New User? <span style={{ color: 'blue', cursor: 'pointer', fontWeight: 'bold' }} onClick={handleClick}>Signup</span></p>
             </div>
         </>
