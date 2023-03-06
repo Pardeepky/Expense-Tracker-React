@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
@@ -11,7 +11,7 @@ const CompleteProfile = () => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('token')
             const enteredName = fullNameRef.current.value;
             const enteredPhotoUrl = profilePhotoUrlRef.current.value;
             const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDMDLGHFhbo5zks5z75xyYouKUnd1pG7R0', {
@@ -28,7 +28,6 @@ const CompleteProfile = () => {
             });
             if (res.ok) {
                 alert('User Updated Succesfully');
-                navigate('/');
                 enteredName.current.value = '';
                 enteredPhotoUrl.current.value = '';
             } else {
@@ -40,6 +39,36 @@ const CompleteProfile = () => {
             console.log(err);
         }
     }
+
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const token = localStorage.getItem('token')
+                const res = await fetch(
+                    "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDMDLGHFhbo5zks5z75xyYouKUnd1pG7R0",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({
+                            idToken: JSON.parse(token),
+                            returnSecureToken: true,
+                        }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log(data);
+                    fullNameRef.current.value = data.users[0].displayName;
+                    profilePhotoUrlRef.current.value = data.users[0].photoUrl;
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchdata();
+    }, []);
 
     const handleCancel = () => {
         navigate('/');
