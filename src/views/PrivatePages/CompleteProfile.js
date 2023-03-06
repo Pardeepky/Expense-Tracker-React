@@ -59,8 +59,8 @@ const CompleteProfile = () => {
                 );
                 if (res.ok) {
                     const data = await res.json();
-                    fullNameRef.current.value = data.users[0].displayName;
-                    profilePhotoUrlRef.current.value = data.users[0].photoUrl;
+                    fullNameRef.current.value = data.users[0].displayName || '';
+                    profilePhotoUrlRef.current.value = data.users[0].photoUrl || '';
                 }
             } catch (err) {
                 console.log(err);
@@ -70,7 +70,7 @@ const CompleteProfile = () => {
     }, []);
 
     const handleCancel = () => {
-        navigate('/');
+        navigate('/home');
     }
 
     return (

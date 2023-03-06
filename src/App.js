@@ -23,7 +23,9 @@ const App = () => {
       <Header />
       <VerifyUser />
       <main>
-        <Outlet />
+        <section>
+          <Outlet />
+        </section>
       </main>
     </>
   );
