@@ -59,7 +59,6 @@ const CompleteProfile = () => {
                 );
                 if (res.ok) {
                     const data = await res.json();
-                    console.log(data);
                     fullNameRef.current.value = data.users[0].displayName;
                     profilePhotoUrlRef.current.value = data.users[0].photoUrl;
                 }

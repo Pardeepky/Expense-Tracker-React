@@ -64,7 +64,7 @@ const Signup = () => {
                 });
                 if (res.ok) {
                     window.alert('User Signed Up succesfully')
-                    navigate('/');
+                    navigate('/login');
                 } else {
                     const err = await res.json();
                     alert(err.error.message)
