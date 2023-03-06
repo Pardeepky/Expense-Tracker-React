@@ -4,7 +4,8 @@ const AuthContext = React.createContext({
     token: '',
     isLoggedIn: false,
     login: (token)=> {},
-    logout: ()=> {}
+    logout: ()=> {},
+    addUserToLocal: (user)=> {}
 })
 
 export default AuthContext;

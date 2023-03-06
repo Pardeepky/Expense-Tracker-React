@@ -6,6 +6,14 @@ const ExpensesList = () => {
 
     const expCtx = useContext(ExpenseContext);
 
+    const handleDelete = (id) => {
+        expCtx.deleteExpense(id);
+    }
+
+    const handleEdit = (id) => {
+        expCtx.edit(id)
+    }
+
     useEffect(() => {
         expCtx.getExpense();
     }, []);
@@ -19,6 +27,8 @@ const ExpensesList = () => {
                         <th>Amount</th>
                         <th>Description</th>
                         <th>Category</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +37,8 @@ const ExpensesList = () => {
                             <td>{item.amount}</td>
                             <td>{item.description}</td>
                             <td>{item.category}</td>
+                            <td><button className='btn btn-success' onClick={() => handleEdit(item.id)}>Edit</button></td>
+                            <td><button className='btn btn-danger' onClick={() => handleDelete(item.id)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>

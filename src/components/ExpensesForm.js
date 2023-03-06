@@ -1,18 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { FormGroup, Label, Input, Form, Button, Col, Row } from 'reactstrap';
 import ExpenseContext from '../context-store/Expense-Context';
 
 const categories = ['Food', 'Petrol', 'Electronics'];
 
 const ExpensesForm = () => {
-    const [amount, setAmount] = useState('');
-    const [description, setDescription] = useState('');
-    const [category, setCategory] = useState(categories[0]);
     const expCtx = useContext(ExpenseContext);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        expCtx.setState(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        expCtx.addExpense({ amount: amount, description: description, category: category });
+        expCtx.addExpense({ amount: expCtx.state.amount, description: expCtx.state.description, category: expCtx.state.category });
+        expCtx.setState({
+            amount: '',
+            description: '',
+            category: categories[0]
+        })
     };
 
     return (
@@ -28,8 +38,8 @@ const ExpensesForm = () => {
                                 name="amount"
                                 id="amount"
                                 placeholder="Enter amount"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
+                                value={expCtx.state.amount}
+                                onChange={handleChange}
                                 required
                             />
                         </FormGroup>
@@ -42,8 +52,8 @@ const ExpensesForm = () => {
                                 name="description"
                                 id="description"
                                 placeholder="Enter description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={expCtx.state.description}
+                                onChange={handleChange}
                                 required
                             />
                         </FormGroup>
@@ -55,8 +65,8 @@ const ExpensesForm = () => {
                                 type="select"
                                 name="category"
                                 id="category"
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
+                                value={expCtx.state.category}
+                                onChange={handleChange}
                             >
                                 {categories.map((cat) => (
                                     <option key={cat} value={cat}>

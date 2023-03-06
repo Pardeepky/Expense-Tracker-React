@@ -13,7 +13,13 @@ const AuthProvider = (props) => {
 
     const logoutHandler = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('userName')
         setToken(null);
+    }
+
+    const addUserToLocal = (user) => {
+        const enteredUserName = user.replace(/[@.]/g, "");
+        localStorage.setItem('userName', JSON.stringify(enteredUserName))
     }
 
     const authContext = {
@@ -21,6 +27,7 @@ const AuthProvider = (props) => {
         isLoggedIn: userIsLoggedIn,
         login: loginHandler,
         logout: logoutHandler,
+        addUserToLocal: addUserToLocal
     }
 
     useEffect(() => {

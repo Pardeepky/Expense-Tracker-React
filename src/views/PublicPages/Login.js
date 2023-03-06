@@ -59,6 +59,7 @@ const Login = ({ setIsLogging, setForgotPassword }) => {
                 if (res.ok) {
                     const data = await res.json();
                     authCtx.login(data.idToken);
+                    authCtx.addUserToLocal(enteredEmail);
                     navigate('/');
                     emailRef.current.value = '';
                     passwordRef.current.value = '';
