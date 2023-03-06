@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import ForgotPassword from './ForgotPassword';
 import Login from './Login';
 import Signup from './Signup';
 
 const LoginScreen = () => {
     const [isLogging, setIsLogging] = useState(true);
+    const [forgotPassword, setForgotPassword] = useState(false);
     const navigate = useNavigate();
 
     const stayHome = () => {
@@ -19,7 +21,11 @@ const LoginScreen = () => {
         stayHome();
     })
 
-    return (isLogging ? <Login setIsLogging={setIsLogging} /> : <Signup setIsLogging={setIsLogging} />);
+    return (<>
+        {isLogging && !forgotPassword && <Login setIsLogging={setIsLogging} setForgotPassword={setForgotPassword} /> }
+        {!isLogging && <Signup setIsLogging={setIsLogging} />}
+        {forgotPassword && <ForgotPassword setIsLogging={setIsLogging} setForgotPassword={setForgotPassword}/>}
+    </>);
 }
 
 export default LoginScreen

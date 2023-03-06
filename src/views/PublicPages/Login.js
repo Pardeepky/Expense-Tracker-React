@@ -10,7 +10,7 @@ import classes from './Login.module.css';
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context-store/Auth-Context";
 
-const Login = ({ setIsLogging }) => {
+const Login = ({ setIsLogging, setForgotPassword }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const navigate = useNavigate();
@@ -107,6 +107,7 @@ const Login = ({ setIsLogging }) => {
                         <Label for="password">Password</Label>
                         {formErrors.password && <span className="error">{formErrors.password}</span>}
                     </FormGroup>
+                    <p className="text-center"><span style={{ color: 'red', cursor: 'pointer', fontWeight: 'bold' }} onClick={()=> setForgotPassword(true)}>Forgot Password?</span></p>
                     {!isLoading && <div className="text-center d-grid gap-2"><Button type="submit" variant="primary" className="text-center">Log In</Button></div>}
                     {isLoading && <div className="text-center d-grid gap-2"><Button>Submitting...</Button></div>}
                 </Form>
