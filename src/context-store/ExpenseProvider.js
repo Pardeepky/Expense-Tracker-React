@@ -61,7 +61,7 @@ const ExpenseProvider = (props) => {
                 },0);
                 dispatch(expenseActions.addExpense(loadedExpense));
                 if(totalAmount>=10000){
-                    dispatch(expenseActions.premium());
+                    dispatch(expenseActions.showPremium());
                 }
             }
         } catch (err) {

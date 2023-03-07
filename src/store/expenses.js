@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     expenses: [],
-    activatePremium: false
+    activatePremium: false,
+    isPremium: false,
+    darkMode: false
 };
 
 const expenseSlice = createSlice({
@@ -12,8 +14,15 @@ const expenseSlice = createSlice({
         addExpense: (state, action) => {
             state.expenses = action.payload;
         },
-        premium: (state)=>{
+        showPremium: (state) => {
             state.activatePremium = true;
+        },
+        isPremium: (state) => {
+            state.isPremium = true;
+            state.darkMode = true
+        },
+        setMode: (state)=> {
+            state.darkMode = !state.darkMode
         }
     }
 })

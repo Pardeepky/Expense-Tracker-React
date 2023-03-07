@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button } from 'reactstrap';
 import { authActions } from '../store/auth';
+import ToggleSwitch from './ToggleSwitch';
+import { expenseActions } from '../store/expenses';
 
 function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const isPremium = useSelector(state => state.expenses.isPremium)
+    const darkMode = useSelector(state => state.expenses.darkMode)
+
+    const handleChange = () => {
+        dispatch(expenseActions.setMode())
+    }
 
     const handleLogout = () => {
         navigate('/');
@@ -16,10 +24,11 @@ function Header() {
     }
 
     return (
-        <Navbar color="light" light expand="md">
+        <Navbar color={darkMode? "dark" : "light"} expand="md">
             <NavbarBrand>
-                Welcome to Expense Tracker!!!
+                Welcome to Expense Tracker!!! {isPremium && <h3><i>Premium</i></h3>}
             </NavbarBrand>
+            {isPremium && <ToggleSwitch handleChange={handleChange} checked={darkMode} />}
             <NavbarToggler />
             <div className='float-right'>
                 <Collapse navbar>

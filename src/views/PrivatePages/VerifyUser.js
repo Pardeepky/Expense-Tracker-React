@@ -1,9 +1,13 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'reactstrap'
+import { expenseActions } from '../../store/expenses';
 
 const VerifyUser = () => {
-    const premium = useSelector(state=> state.expenses.activatePremium);
+    const showPremium = useSelector(state => state.expenses.activatePremium);
+    const isPremium = useSelector(state => state.expenses.isPremium)
+
+    const dispatch = useDispatch();
 
     const handleSubmit = async () => {
         try {
@@ -33,14 +37,14 @@ const VerifyUser = () => {
     }
     return (
         <>
-        <div className='d-flex justify-content-center'>
-            <div className='m-2'>
-                <Button color="primary" onClick={handleSubmit}>Verify Email</Button>
+            <div className='d-flex justify-content-center'>
+                <div className='m-2'>
+                    <Button color="primary" onClick={handleSubmit}>Verify Email</Button>
+                </div>
+                {showPremium && !isPremium && <div className='m-2'>
+                    <Button color="success" onClick={() => dispatch(expenseActions.isPremium())}>Activate Premium</Button>
+                </div>}
             </div>
-            {premium && <div className='m-2'>
-                <Button color="success">Activate Premium</Button>
-            </div>}
-        </div>
         </>
     )
 }

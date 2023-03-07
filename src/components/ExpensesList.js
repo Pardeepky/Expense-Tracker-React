@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Table } from 'reactstrap';
 import ExpenseContext from '../context-store/Expense-Context'
+import { CSVLink, CSVDownload } from "react-csv";
 
 const ExpensesList = () => {
 
@@ -19,7 +20,7 @@ const ExpensesList = () => {
 
     useEffect(() => {
         expCtx.getExpense();
-    },[]);
+    }, []);
 
     return (
         <div className='card m-5 bg-secondary text-white'>
@@ -46,6 +47,9 @@ const ExpensesList = () => {
                     ))}
                 </tbody>
             </Table>
+            <div className='d-flex justify-content-end mb-5 mr-2'>
+                <CSVLink data={expenses} className='text-center'><button className='btn btn-success'>Download me</button></CSVLink>
+            </div>
         </div>
     );
 }
