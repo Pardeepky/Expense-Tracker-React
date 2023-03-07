@@ -1,16 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button } from 'reactstrap';
-import AuthContext from '../context-store/Auth-Context';
+import { authActions } from '../store/auth';
 
 function Header() {
     const navigate = useNavigate();
-
-    const authCtx = useContext(AuthContext);
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
         navigate('/');
-        authCtx.logout();
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName')
+        dispatch(authActions.logout())
     }
 
     return (
@@ -31,7 +33,6 @@ function Header() {
                         <Button color="primary" className="m-2" onClick={handleLogout}>
                             Logout
                         </Button>
-
                     </Nav>
                 </Collapse>
             </div>

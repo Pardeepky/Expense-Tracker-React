@@ -1,12 +1,15 @@
 import { useState } from "react";
 import ExpenseContext from "./Expense-Context"
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { expenseActions } from "../store/expenses";
 
 const categories = ['Food', 'Petrol', 'Electronics'];
 
 const ExpenseProvider = (props) => {
+    const dispatch = useDispatch();
+    const expenses = useSelector(state => state.expenses.expenses)
 
-    const [expenses, setExpenses] = useState([]);
     const [state, setState] = useState({
         amount: '',
         description: '',
@@ -53,7 +56,13 @@ const ExpenseProvider = (props) => {
                         category: res.data[key].category
                     })
                 }
-                setExpenses(loadedExpense);
+                const totalAmount = loadedExpense.reduce((curr, item) => {
+                    return parseInt(curr) + parseInt(item.amount);
+                },0);
+                dispatch(expenseActions.addExpense(loadedExpense));
+                if(totalAmount>=10000){
+                    dispatch(expenseActions.premium());
+                }
             }
         } catch (err) {
             console.log(err);
@@ -90,7 +99,6 @@ const ExpenseProvider = (props) => {
     }
 
     const expenseContext = {
-        expenses: expenses,
         addExpense: addExpense,
         getExpense: getExpense,
         deleteExpense: deleteExpense,

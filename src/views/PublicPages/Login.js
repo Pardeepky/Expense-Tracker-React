@@ -8,11 +8,14 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context-store/Auth-Context";
+import { useDispatch } from 'react-redux';
+import { authActions } from "../../store/auth";
 
 const Login = ({ setIsLogging, setForgotPassword }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const authCtx = useContext(AuthContext);
 
     const [formErrors, setFormErrors] = useState({
@@ -58,9 +61,10 @@ const Login = ({ setIsLogging, setForgotPassword }) => {
                 });
                 if (res.ok) {
                     const data = await res.json();
-                    authCtx.login(data.idToken);
+                    dispatch(authActions.login(data.idToken));
+                    localStorage.setItem('token', JSON.stringify(data.idToken));
                     authCtx.addUserToLocal(enteredEmail);
-                    navigate('/');
+                    navigate('/home');
                     emailRef.current.value = '';
                     passwordRef.current.value = '';
                 } else {

@@ -4,23 +4,24 @@ import ForgotPassword from './ForgotPassword';
 import Login from './Login';
 import Signup from './Signup';
 import classes from './Login.module.css'
+import { useSelector } from 'react-redux';
 
 const LoginScreen = () => {
     const [isLogging, setIsLogging] = useState(true);
     const [forgotPassword, setForgotPassword] = useState(false);
     const navigate = useNavigate();
 
+    const auth = useSelector(state => state.auth.isAuthenticated);
+
     const stayHome = () => {
-        let token = localStorage.getItem('token')
-        let isLoggedIn = !!token
-        if (isLoggedIn) {
+        if (auth) {
             navigate('/home');
         }
     }
 
     useEffect(() => {
         stayHome();
-    })
+    }, [])
 
     return (<>
         <div className={classes.loginWrapper}>
