@@ -17,11 +17,16 @@ const expenseSlice = createSlice({
         showPremium: (state) => {
             state.activatePremium = true;
         },
+        hidePremium: (state) => {
+            state.isPremium = false;
+            state.activatePremium = false;
+            state.darkMode= false
+        },
         isPremium: (state) => {
             state.isPremium = true;
             state.darkMode = true
         },
-        setMode: (state)=> {
+        setMode: (state) => {
             state.darkMode = !state.darkMode
         }
     }

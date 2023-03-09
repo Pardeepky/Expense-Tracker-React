@@ -36,15 +36,17 @@ const ExpensesList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {expenses.map((item) => (
-                        <tr key={item.id}>
-                            <td>{item.amount}</td>
-                            <td>{item.description}</td>
-                            <td>{item.category}</td>
-                            <td><button className='btn btn-success' onClick={() => handleEdit(item.id)}>Edit</button></td>
-                            <td><button className='btn btn-danger' onClick={() => handleDelete(item.id)}>Delete</button></td>
-                        </tr>
-                    ))}
+                    {expenses.map((item) => {
+                        return (
+                            <tr key={item.id}>
+                                <td>{item.amount}</td>
+                                <td>{item.description}</td>
+                                <td>{item.category}</td>
+                                <td><button className='btn btn-success' onClick={() => handleEdit(item.id)}>Edit</button></td>
+                                <td><button className='btn btn-danger' onClick={() => handleDelete(item.id)}>Delete</button></td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </Table>
             <div className='d-flex justify-content-end mb-5 mr-2'>

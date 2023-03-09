@@ -23,14 +23,12 @@ const ExpenseProvider = (props) => {
             const userName = JSON.parse(localStorage.getItem('userName'))
             if (!editingMode) {
                 const res = await axios.post(`https://expense-tracker-1152b-default-rtdb.firebaseio.com/expenses/${userName}.json`, item)
-                console.log("add", res);
                 if (res.status) {
                     alert('Expense Added');
                     getExpense();
                 }
             } else {
                 const res = await axios.put(`https://expense-tracker-1152b-default-rtdb.firebaseio.com/expenses/${userName}/${retrievedId}.json`, item)
-                console.log("edit", res);
                 if (res.status) {
                     alert('Expense Edited');
                     getExpense();
@@ -62,6 +60,8 @@ const ExpenseProvider = (props) => {
                 dispatch(expenseActions.addExpense(loadedExpense));
                 if(totalAmount>=10000){
                     dispatch(expenseActions.showPremium());
+                } else {
+                    dispatch(expenseActions.hidePremium())
                 }
             }
         } catch (err) {
@@ -72,8 +72,7 @@ const ExpenseProvider = (props) => {
     const deleteExpense = async (id) => {
         try {
             const userName = JSON.parse(localStorage.getItem('userName'))
-            setRetrievedId(id);
-            const res = await axios.delete(`https://expense-tracker-1152b-default-rtdb.firebaseio.com/expenses/${userName}/${retrievedId}.json`)
+            const res = await axios.delete(`https://expense-tracker-1152b-default-rtdb.firebaseio.com/expenses/${userName}/${id}.json`)
             if (res.status) {
                 console.log('Expense successfuly deleted')
                 getExpense();
@@ -82,10 +81,10 @@ const ExpenseProvider = (props) => {
             console.log(err);
         }
     }
-
+    
     const editExpense = (id) => {
         try {
-            setRetrievedId(id)
+            setRetrievedId(id);
             setEditingMode(true);
             const editItem = expenses.find((item) => item.id === id);
             setState({

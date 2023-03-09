@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button } from 'reactstrap';
@@ -17,14 +17,15 @@ function Header() {
     }
 
     const handleLogout = () => {
-        navigate('/');
         localStorage.removeItem('token');
         localStorage.removeItem('userName')
         dispatch(authActions.logout())
+        dispatch(expenseActions.hidePremium());
+        navigate('/');
     }
 
     return (
-        <Navbar color={darkMode? "dark" : "light"} expand="md">
+        <Navbar color={darkMode ? "dark" : "light"} expand="md">
             <NavbarBrand>
                 Welcome to Expense Tracker!!! {isPremium && <h3><i>Premium</i></h3>}
             </NavbarBrand>
@@ -39,7 +40,7 @@ function Header() {
                                 <NavLink to="/home/complete-profile" className="text-white">Complete Now</NavLink>
                             </Button>
                         </NavItem>
-                        <Button color="primary" className="m-2" onClick={handleLogout}>
+                        <Button color="danger" className="m-2" onClick={handleLogout}>
                             Logout
                         </Button>
                     </Nav>
